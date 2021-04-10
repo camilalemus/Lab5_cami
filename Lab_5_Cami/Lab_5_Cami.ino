@@ -143,3 +143,33 @@ void loop()
     }
   }
 }
+
+
+//********************************************************************
+//                   FUNCION DIRECTORIO DE LA SD
+//********************************************************************
+
+
+void printDirectory(File dir, int numTabs) {
+
+  dir.rewindDirectory(); //Muestra el directorio completo
+  while (true) {
+
+    File entry =  dir.openNextFile(); //Abre el siguiente archivo
+    if (! entry) { //Revisando el puntero
+      // no more files
+      break;
+    }
+
+    Serial.print(entry.name());
+    if (entry.isDirectory()) {
+      Serial.println("/");
+      printDirectory(entry, numTabs + 1);
+    } else {
+      // files have sizes, directories do not
+      Serial.print("\t\t");
+      Serial.println(entry.size(), DEC);
+    }
+    entry.close();
+  }
+}
