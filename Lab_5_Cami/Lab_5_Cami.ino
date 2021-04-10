@@ -1,4 +1,4 @@
-//************************************************************************** 
+//**************************************************************************
 // Author: Camila Lemus
 // Carnet: 18272
 //**************************************************************************
@@ -32,9 +32,9 @@ void menu(void) {
 //********************************************************************
 
 void Explotado(void) { //Imprimir al muñequito explotado
-  myFile = SD.open("Explotado.txt");
+  myFile = SD.open("EXPLOT~1.txt");
   if (myFile) {
-    Serial.println("Explotado.txt:");
+    Serial.println("EXPLOT~1.txt:");
     // read from the file until there's nothing else in it:
     while (myFile.available()) {
       Serial.write(myFile.read());
@@ -43,16 +43,16 @@ void Explotado(void) { //Imprimir al muñequito explotado
     myFile.close();
   } else {
     // if the file didn't open, print an error:
-    Serial.println("error opening Explotado.txt");
+    Serial.println("error opening EXPLOT~1.txt");
   }
   menu();
 }
 
 
 void Iguanita(void) { //Imprimir a la iguanita
-  myFile = SD.open("Iguanita.txt");
+  myFile = SD.open("IGUANITA.txt");
   if (myFile) {
-    Serial.println("Iguanita.txt:");
+    Serial.println("IGUANITA.txt:");
     // read from the file until there's nothing else in it:
     while (myFile.available()) {
       Serial.write(myFile.read());
@@ -61,16 +61,16 @@ void Iguanita(void) { //Imprimir a la iguanita
     myFile.close();
   } else {
     // if the file didn't open, print an error:
-    Serial.println("error opening Iguanita.txt");
+    Serial.println("error opening IGUANITA.txt");
   }
   menu();
 }
 
 
 void Piki(void) { //Imprimir al gatito tipo pikachu
-  myFile = SD.open("Piki.txt");
+  myFile = SD.open("PIKI.txt");
   if (myFile) {
-    Serial.println("Piki.txt:");
+    Serial.println("PIKI.txt:");
     // read from the file until there's nothing else in it:
     while (myFile.available()) {
       Serial.write(myFile.read());
@@ -79,7 +79,7 @@ void Piki(void) { //Imprimir al gatito tipo pikachu
     myFile.close();
   } else {
     // if the file didn't open, print an error:
-    Serial.println("error opening Piki.txt");
+    Serial.println("error opening PIKI.txt");
   }
   menu();
 }
@@ -88,27 +88,27 @@ void Piki(void) { //Imprimir al gatito tipo pikachu
 //                        SETUP
 //********************************************************************
 void setup() {
-    // Open serial communications and wait for port to open:
-      Serial.begin(115200);  //Baudrate
-      while (!Serial) {
-        ; // wait for serial port to connect. Needed for Leonardo only
-      }
-    
-      SPI.setModule(0);
-    
-      Serial.print("Inicializando tarjeta SD... ");
-      pinMode(PA_3, OUTPUT);
-    
-      if (!SD.begin(PA_3)) {
-        Serial.println("Error en inicializar SD");
-        return;
-      }
-      Serial.println("Inicialización completa.");
-      myFile = SD.open("/");
-      printDirectory(myFile, 0);
-      Serial.println("Terminada!");
-    
-      menu();
+  // Open serial communications and wait for port to open:
+  Serial.begin(115200);  //Baudrate
+  while (!Serial) {
+    ; // wait for serial port to connect. Needed for Leonardo only
+  }
+
+  SPI.setModule(0);
+
+  Serial.print("Inicializando tarjeta SD... ");
+  pinMode(PA_3, OUTPUT);
+
+  if (!SD.begin(PA_3)) {
+    Serial.println("Error en inicializar SD");
+    return;
+  }
+  Serial.println("Inicialización completa.");
+  myFile = SD.open("/");
+  printDirectory(myFile, 0);
+  Serial.println("Terminada!");
+
+  menu();
 
 }
 
@@ -133,14 +133,13 @@ void loop()
     else if (opcion == '2') { //Imprimir imagen de la iguanita
       Iguanita();
     }
-   
     else if (opcion == '3') { //Imprimir imagen del pikachu o no se que es
       Piki();
     }
-    else {
-      Serial.println("Error, ingrese un número válido "); //Progra defensiva
-      menu();
-    }
+//    else  {
+//      Serial.println("Error, ingrese un número válido "); //Progra defensiva
+//      menu();
+//    }
   }
 }
 
