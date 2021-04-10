@@ -7,6 +7,9 @@
 #include <SD.h>
 
 
+int opcion; //Seleccionar opcion del menu
+File myFile;
+
 //********************************************************************
 //                         MENU
 //********************************************************************
@@ -85,7 +88,27 @@ void Piki(void) { //Imprimir al gatito tipo pikachu
 //                        SETUP
 //********************************************************************
 void setup() {
-  // put your setup code here, to run once:
+    // Open serial communications and wait for port to open:
+      Serial.begin(115200);  //Baudrate
+      while (!Serial) {
+        ; // wait for serial port to connect. Needed for Leonardo only
+      }
+    
+      SPI.setModule(0);
+    
+      Serial.print("Inicializando tarjeta SD... ");
+      pinMode(PA_3, OUTPUT);
+    
+      if (!SD.begin(PA_3)) {
+        Serial.println("Error en inicializar SD");
+        return;
+      }
+      Serial.println("Inicialización completa.");
+      myFile = SD.open("/");
+      printDirectory(myFile, 0);
+      Serial.println("Terminada!");
+    
+      menu();
 
 }
 
@@ -98,20 +121,20 @@ void loop()
 {
 
   if (Serial.available() > 0) { //Bandera para ver si el buffer está habilitado
-    seleccion = Serial.read(); //Se lee lo que el usuario escribió
-    if (seleccion == '0') {
+    opcion = Serial.read(); //Se lee lo que el usuario escribió
+    if (opcion == '0') {
       myFile = SD.open("/");     // Ver los archivos que estan dentro
       printDirectory(myFile, 0);
       menu();
     }
-    else if (seleccion == '1') { //Imprimir imagen de muñequito explotado
+    else if (opcion == '1') { //Imprimir imagen de muñequito explotado
       Explotado();
     }
-    else if (seleccion == '2') { //Imprimir imagen de la iguanita
+    else if (opcion == '2') { //Imprimir imagen de la iguanita
       Iguanita();
     }
    
-    else if (seleccion == '3') { //Imprimir imagen del pikachu o no se que es
+    else if (opcion == '3') { //Imprimir imagen del pikachu o no se que es
       Piki();
     }
     else {
